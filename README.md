@@ -385,3 +385,10 @@ import io.cucumber.testng.CucumberOptions;
 public class TestRunner extends AbstractTestNGCucumberTests {
 }
 ```
+
+### 📥 Downloads and Releases
+Find the latest releases and JAR files here:
+📦 GitHub Releases
+
+### 📧 Support
+For any issues or questions, please open an issue on GitHub or contact us at meetp5484@gmail.com.
