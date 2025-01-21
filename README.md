@@ -265,6 +265,11 @@ public class MobileObject {
 >Environment Flexibility
 
 ->Separate base URIs for testing environments.
+
+>Open Browser while run api feature/sceanrios.
+
+->The user sets the value of `'OpenBrowserforApi'` to `'true'` in the `'application.properties'` file, enabling the browser to open while a feature or scenario is running.
+>
 > **Api Automation example**
 
 Change the value of `testEnvironment` to `'api'` in the `application.properties` file.
