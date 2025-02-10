@@ -1,10 +1,10 @@
 ### **Common Automation Framework**
 
-A comprehensive automation library designed to simplify and unify testing across Web, Mobile and API platforms. This framework encapsulates modular and reusable components, allowing seamless integration into any project.
+A comprehensive automation library designed to simplify and unify testing across Web, Mobile ,API and Desktop platforms. This framework encapsulates modular and reusable components, allowing seamless integration into any project.
 
 **Key Features**
 
-->Unified driver factory for Web, Mobile, and Api automation.
+->Unified driver factory for Web, Mobile, Api and Desktop automation.
 
 ->Data-driven testing support using Excel or JSON files.
 
@@ -42,6 +42,8 @@ project-root/
 │       │   ├── web/
 │       │   │   └── img.png (auto-generated if screenshot=true in application.properties)
 │       │   └── mobile/
+│       │       └── img.png (auto-generated if screenshot=true in application.properties)
+│       │   ├── desktop/
 │       │       └── img.png (auto-generated if screenshot=true in application.properties)
 ```
 
@@ -364,6 +366,151 @@ public class MobileObject {
     }
 }
 ```
+### 🔗 Desktop Automation Features
+> Dynamic Screen Handling
+
+-> Adapts to different screen resolutions and UI scaling.
+
+-> Supports multi-monitor setups by detecting the active screen.
+
+
+> Robot Framework Integration
+
+-> Uses Java’s Robot class to simulate keyboard and mouse actions.
+
+-> Handles key combinations (e.g., Ctrl+C, Alt+Tab) and special keys like Enter or Esc.
+
+> Custom Utility Functions
+
+-> getImagePattern(): Retrieves screen elements dynamically based on images.
+
+-> openCustomApplication(): Launches desktop applications using configurations.
+
+-> captureScreen(): Takes and stores screenshots for debugging.
+
+> Cross-Platform Support
+
+-> Runs on Windows, macOS, and Linux.
+
+-> Adapts to different OS-specific shortcuts and application behaviors.
+
+> **Desktop Automation example**
+
+- Feature file:
+
+```
+Feature: Here We are testing the desktop
+  Scenario: open notepad for write something
+    Given I am on the desktop
+    When open to click on "1737552512019.png".
+    And I write "Hello, World!"
+    Then save and close "close_icon.png" notepad
+```
+
+- StepDefination file:
+```
+package stepDefination;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.sikuli.script.FindFailed;
+import pageObject.DesktopObject;
+
+import java.awt.*;
+
+public class desktopDefination {
+
+    private DesktopObject desktopObject;
+
+    public desktopDefination(DesktopObject desktopObject) {
+        this.desktopObject = desktopObject;
+    }
+
+    @Given("I am on the desktop")
+    public void iAmOnTheDesktop() {
+        desktopObject.iAmOnTheDesktop();
+
+    }
+    @When("open to click on {string}.")
+    public void openNotToClieckOn(String arg0) throws FindFailed, InterruptedException, AWTException {
+        desktopObject.openNotToClieckOn(arg0);
+    }
+
+    @And("I write {string}")
+    public void iWrite(String arg0) throws FindFailed {
+        desktopObject.iWrite(arg0);
+
+    }
+
+    @Then("save and close {string} notepad")
+    public void saveAndCloseNotepad(String arg0) throws FindFailed {
+        desktopObject.saveAndCloseNotepad(arg0);
+    }
+}
+```
+
+PageObject file:
+
+```
+package pageObject;
+
+import core.utils.DesktopUtils;
+import hooks.TestHooks;
+import org.sikuli.hotkey.Keys;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Key;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Screen;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
+import static core.utils.CommonUtils.logInfo;
+
+public class DesktopObject {
+    private Screen screen;
+    private Robot robot;
+
+    public DesktopObject() {
+        this.screen = TestHooks.getScreen();
+        this.robot = TestHooks.getRobot();
+    }
+
+    public void iAmOnTheDesktop() {
+        logInfo("Desktop Automation");
+    }
+
+    public void openNotToClieckOn(String arg0) throws FindFailed {
+
+        Pattern pattern = DesktopUtils.getImagePattern(arg0);   // I used a desktop utility that requires me to enter the image path only once..
+        robot.keyPress(KeyEvent.VK_WINDOWS);
+        robot.keyPress(KeyEvent.VK_D);
+        robot.keyRelease(KeyEvent.VK_D);
+        robot.keyRelease(KeyEvent.VK_WINDOWS);
+
+        //open the existing notepad file
+        screen.doubleClick(pattern);
+      
+    }
+
+    public void iWrite(String arg0) throws FindFailed {
+        Pattern notepad = DesktopUtils.getImagePattern(arg0);
+        //Text entered in notepad file
+        screen.type(notepad, "Hello");
+    }
+
+    public void saveAndCloseNotepad(String arg0) throws FindFailed {
+        screen.type("s", Key.CTRL);
+        Pattern closeNotepad = DesktopUtils.getImagePattern(arg0);
+
+        //Close the notepad file
+        screen.click(closeNotepad);
+    }
+}
+```
+
 
 - **Common TestRunner file:**
 
