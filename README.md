@@ -65,6 +65,52 @@ project-root/
  ```
 - Ensure your project compiles without errors and the JAR is recognized in your IDE.
 
+### Configure application.properties
+Create an application.properties file in your project's src/main/resources directory and include the following configurations:
+**Updated application.properties file:**
+
+```
+#Environments setup  -> web|mobile|api
+testEnvironment=web
+
+# Web settings -> chrome | firefox | edge
+browser=chrome
+baseurl=http://google.com
+
+# Mobile settings -> android | ios
+platformName= android
+appPath=Path/to/apk
+#If you want to reinstall the application on your mobile, select "true." Otherwise, select "false."
+reinstallApp=false
+#Flags will be dynamically set based on connected devices
+runOnDevice1=true
+runOnDevice2=false
+appPackage=com.google.calculator
+appActivity=com.google.calculator.MainActivity
+#IOS-> XCUITest
+bundleId=?
+udid=00 D0 Db EF 21 B9 20 BF D2 83 71 00 6B C0 4F 81 CX
+
+
+# API settings
+apiBaseUri= https://reqres.in/
+apiBasePath= /Test/
+Token=Bearer Token
+#If you want to open the browser to see how many APIs passed and failed, select "True." Otherwise, select "False."
+openBrowserForApi=true
+
+#Desktop settings
+imageBasePath=path/to/resource_page
+openanysoftware=notepad
+
+
+
+#Screenshot true | false
+#If you want to capture a screenshot of a failed step, you can achieve it by using a simple true/false value for the screenshot configuration below.
+#This approach allows easy screenshot capturing for both web and mobile applications.
+screenshot= true
+screenshot.path=src/test/resources
+```
 
 ### **🌐 Web Automation Features**
 
