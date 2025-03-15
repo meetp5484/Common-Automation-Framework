@@ -16,10 +16,16 @@ A comprehensive automation library designed to simplify and unify testing across
 
 ->Easily extensible for future technologies and platforms.
 
+->Generate interactive Allure Reports with a comprehensive dashboard.
+
+->Automatically send Allure Reports via email after test execution.
+
 ### **Project structure**
 
 ```
 project-root/
+├── allure-results/  (Generated during test execution)
+├── allure-report/   (Generated after running Allure report command)
 ├── src/
 │   ├── main/
 │   │   ├── java/
@@ -30,21 +36,21 @@ project-root/
 │   │       │   └── RequestBody.json
 │   │       ├── steps.html
 │   │       └── application.properties
-│   └── test/
-│       ├── java/
-│       │   ├── stepDefination/
-│       │   │   └── StepDefination.java
-│       │   └── testRunner/
-│       │       └── TestRunner.java
-│       ├── resources/
-│       │   ├── feature/
-│       │   │   └── feature.feature
-│       │   ├── web/
-│       │   │   └── img.png (auto-generated if screenshot=true in application.properties)
-│       │   └── mobile/
-│       │       └── img.png (auto-generated if screenshot=true in application.properties)
-│       │   ├── desktop/
-│       │       └── img.png (auto-generated if screenshot=true in application.properties)
+│   ├── test/
+│   │   ├── java/
+│   │   │   ├── stepDefination/
+│   │   │   │   └── StepDefination.java
+│   │   │   └── testRunner/
+│   │   │       └── TestRunner.java
+│   │   ├── resources/
+│   │   │   ├── feature/
+│   │   │   │   └── feature.feature
+│   │   │   ├── web/
+│   │   │   │   └── img.png (auto-generated if screenshot=true in application.properties)
+│   │   │   ├── mobile/
+│   │   │   │   └── img.png (auto-generated if screenshot=true in application.properties)
+│   │   │   ├── desktop/
+│   │   │   │   └── img.png (auto-generated if screenshot=true in application.properties)
 ```
 
 ### **How to Use the Framework**
@@ -110,6 +116,21 @@ openanysoftware=notepad
 #This approach allows easy screenshot capturing for both web and mobile applications.
 screenshot= true
 screenshot.path=src/test/resources
+
+#The test report is sent only when the full test suite runs via `testRunner.TestRunner` and `EnableEmail` is set to `true`; otherwise, no email is sent.
+EnableEmail=true
+#The report path should be the same as the test runner file.
+report.path=C:/Users/public/Desktop
+mail.smtp.host=smtp.office365.com
+mail.smtp.port=587
+mail.smtp.auth=true
+mail.smtp.starttls.enable=true
+#Enter Email details
+FromEmail=Test123@gmail.com
+Password=Test@12345
+ToEmail=Test456@gmail.com
+Subject=Allure Test Execution Report
+BodyText=Please find the attached Allure test execution report.
 ```
 
 ### **🌐 Web Automation Features**
@@ -563,18 +584,23 @@ public class DesktopObject {
 ```
 package testRunner;
 
+import core.listener.TestListener;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
+import org.testng.annotations.Listeners;
+
+
 
 @CucumberOptions(
-        features = "src/test/resources/feature/simple.feature", // Path to your feature files
-        glue = {"hooks","stepDefination"},      // Path to your step definitions and hooks
+        features = "src/test/resources/feature/simple.feature",
+        glue = {"hooks", "stepDefination"},
         plugin = {
-                "pretty",                              // Prints Gherkin steps in the console
-                "json:target/cucumber-reports/Cucumber.json", // JSON report
-                "html:target/cucumber-reports/Cucumber.html"  // HTML report
-        }
-        )
+                "pretty",
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+        },
+        monochrome = true
+)
+@Listeners(TestListener.class)
 public class TestRunner extends AbstractTestNGCucumberTests {
 }
 ```
