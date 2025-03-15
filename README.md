@@ -71,6 +71,35 @@ project-root/
  ```
 - Ensure your project compiles without errors and the JAR is recognized in your IDE.
 
+> **How to install Allure Reports?**
+
+- To generate and open Allure reports, install Allure Command Line using:
+`npm install -g allure-commandline`
+
+> **Prerequisite: Ensure Node.js is installed before running the command.**
+
+- Install Node.js:
+
+1. Download Node.js: https://nodejs.org/en/download
+2. Verify installation: Run the following command:
+```
+node --version  
+npm --version  
+```
+3. Re-run the command if now installed node so:
+`npm install -g allure-commandline`
+
+**How to set allure report**
+1. Convert json allure-results to viewable allure-report at your project directory path.
+`allure generate allure-results --clean -o allure-report`
+- allure generate → Converts JSON reports to an HTML report.
+- allure-results → Input folder where Allure stores test execution data.
+- --clean → Removes old reports before generating a new one.
+- -o allure-report → Output folder where the HTML report is saved.
+2. To open the Allure report dashboard, run the following command:
+`allure open allure-report`
+
+
 ### Configure application.properties
 Create an application.properties file in your project's src/main/resources directory and include the following configurations:
 **Updated application.properties file:**
