@@ -93,7 +93,7 @@ project-root/
  **bddGen.bat:**
 ```
 @echo off 
-java -jar CommonAutomation-1.0-SNAPSHOT.jar %1 %2  
+java -jar lib/CommonAutomation-1.0-SNAPSHOT.jar %1 %2  
 ```
 
 2️⃣ Grant execute permission:
@@ -114,7 +114,7 @@ LoginObject.java (Page Object file)
 1️⃣ Create a shell script under project`(bddGen.sh)` and add the following text:
 ```
 #!/bin/bash  
-java -jar CommonAutomation-1.0-SNAPSHOT.jar $1 $2
+java -jar lib/CommonAutomation-1.0-SNAPSHOT.jar $1 $2
 ```
 2️⃣ Grant execute permission:
 Command: `chmod +x bddGen.sh`
