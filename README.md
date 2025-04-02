@@ -96,13 +96,11 @@ project-root/
 java -jar lib/CommonAutomation-1.0-SNAPSHOT.jar %1 %2  
 ```
 
-2️⃣ Grant execute permission:
- Command : `chmod +x bddGen.bat`
-3️⃣ Run the command in the terminal:
-`./bddGen <File_Name> <Environment>`
+2️⃣Run the command in the terminal:
+`.\bddGen <File_Name> <Environment>`
 
 Example:
-`./bddGen Login Web`
+`.\bddGen Login Web`
 After running the command, the following files will be automatically created:
 ```
 Login.feature (Feature file)
@@ -120,10 +118,10 @@ java -jar lib/CommonAutomation-1.0-SNAPSHOT.jar $1 $2
 Command: `chmod +x bddGen.sh`
 
 3️⃣ Run the command:
-`./bddGen.sh <File_Name> <Environment>
+`.\bddGen.sh <File_Name> <Environment>
 `
 Example:
-`./bddGen.sh Login Web`
+`.\bddGen.sh Login Web`
 After running the command, the following files will be automatically created:
 ```
 Login.feature (Feature file)
