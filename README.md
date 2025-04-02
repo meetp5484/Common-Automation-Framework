@@ -65,6 +65,7 @@ project-root/
 - Configuring JDK 22 for the Project
 - Download the JAR file from the provided attachment or link
 - If using an IDE like IntelliJ or Eclipse:
+- Right-click on the JAR file → Add as `Library`.
 - Create a folder inside the project and add the JAR file to the folder.
 -  Add Dependency to `pom.xml`
 ```
