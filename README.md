@@ -20,12 +20,15 @@ A comprehensive automation library designed to simplify and unify testing across
 
 ->Automatically send Allure Reports via email after test execution.
 
+->A new CLI command that allows you to generate essential automation files instantly for Web, Mobile, API, and Desktop automation! 🎯With a single command
+
 ### **Project structure**
 
 ```
 project-root/
 ├── allure-results/  (Generated during test execution)
 ├── allure-report/   (Generated after running Allure report command)
+|──lib/CommonAutomation-1.0-SNAPSHOT.jar
 ├── src/
 │   ├── main/
 │   │   ├── java/
@@ -51,6 +54,9 @@ project-root/
 │   │   │   │   └── img.png (auto-generated if screenshot=true in application.properties)
 │   │   │   ├── desktop/
 │   │   │   │   └── img.png (auto-generated if screenshot=true in application.properties)
+|─bddGen.bat ( for windows)
+|─bddGen.sh ( for Mac/Linux)
+|─pom.xml
 ```
 
 ### **How to Use the Framework**
@@ -59,8 +65,7 @@ project-root/
 - Configuring JDK 22 for the Project
 - Download the JAR file from the provided attachment or link
 - If using an IDE like IntelliJ or Eclipse:
--  Right-click on the JAR file → Add as `Library`.
--  If not using a build tool like Maven or Gradle, manually add the JAR to the project’s build path.
+- Create a folder inside the project and add the JAR file to the folder.
 -  Add Dependency to `pom.xml`
 ```
    <dependency>    
@@ -68,8 +73,63 @@ project-root/
      <artifactId>CommonAutomation</artifactId>    
      <version>1.0-SNAPSHOT</version>
    </dependency> 
+   <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/lib</directory>
+                <includes>
+                    <include>*.jar</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
  ```
 - Ensure your project compiles without errors and the JAR is recognized in your IDE.
+
+
+### 📌 How to Use One-Command BDD Setup?
+### **For Windows Users**
+ 1️⃣ Create a bat file  under project `(bddGen.bat)` and add the following text:
+ **bddGen.bat:**
+```
+@echo off 
+java -jar CommonAutomation-1.0-SNAPSHOT.jar %1 %2  
+```
+
+2️⃣ Grant execute permission:
+ Command : `chmod +x bddGen.bat`
+3️⃣ Run the command in the terminal:
+`./bddGen <File_Name> <Environment>`
+
+Example:
+`./bddGen Login Web`
+After running the command, the following files will be automatically created:
+```
+Login.feature (Feature file)
+LoginDefinition.java (Step Definition file)
+LoginObject.java (Page Object file)
+```
+
+### **For macOS/Linux Users**
+1️⃣ Create a shell script under project`(bddGen.sh)` and add the following text:
+```
+#!/bin/bash  
+java -jar CommonAutomation-1.0-SNAPSHOT.jar $1 $2
+```
+2️⃣ Grant execute permission:
+Command: `chmod +x bddGen.sh`
+
+3️⃣ Run the command:
+`./bddGen.sh <File_Name> <Environment>
+`
+Example:
+`./bddGen.sh Login Web`
+After running the command, the following files will be automatically created:
+```
+Login.feature (Feature file)
+LoginDefinition.java (Step Definition file)
+LoginObject.java (Page Object file)
+```
 
 > **How to install Allure Reports?**
 
